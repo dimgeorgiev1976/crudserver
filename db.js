@@ -45,13 +45,12 @@ async function getDataBaseByKey (key) {
 			order.good = newData.good || order.good
 			order.price = newData.price || order.price
 			order.clientName = newData.clientName || order.clientName
-			order.managerName = newData.managerName || order.managerName
 			order.requestStatus = newData.requestStatus || order.requestStatus
 			order.paymentStatus = newData.paymentStatus || order.paymentStatus
 
 			await save()
 
-			return order
+			return await this.getById(order.id)
 		},
 
 		async create (data) {
@@ -60,7 +59,6 @@ async function getDataBaseByKey (key) {
 				good: data.good || "NotName",
 				price: data.price || 0,
 				clientName: data.clientName || 'NotName',
-				managerName: data.managerName || 'NotName',
 				requestStatus: data.requestStatus || 0,
 				paymentStatus: data.paymentStatus || 0
 			}
@@ -69,7 +67,7 @@ async function getDataBaseByKey (key) {
 			orders.push(order)
 			await save()
 
-			return order
+			return await this.getById(order.id)
 		},
 
 		async removeById (id) {
