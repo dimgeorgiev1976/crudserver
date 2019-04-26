@@ -94,10 +94,9 @@ async function getDataBaseByKey (key) {
 	}
 
 	async function reinit () {
-		const defaultData = require(defaultPath)
-		await writeFile(fullPath, JSON.stringify(defaultData, null, 2))
-
-		orders = defaultData
+		orders = require(defaultPath)
+		console.log(orders)
+		await writeFile(fullPath, JSON.stringify(orders, null, 2))
 	}
 }
 
