@@ -18,7 +18,7 @@ async function getDataBaseByKey (key) {
 		await reinit()
 	}
 
-	let orders = require(fullPath)
+	let orders = await getJSONFromFile(fullPath)
 
 	const db = {
 		async getById (id) {
@@ -94,10 +94,25 @@ async function getDataBaseByKey (key) {
 	}
 
 	async function reinit () {
-		orders = require(defaultPath)
-		console.log(orders)
+		orders = await getJSONFromFile(defaultPath)
 		await writeFile(fullPath, JSON.stringify(orders, null, 2))
 	}
 }
 
 export default getDataBaseByKey
+
+async function getJSONFromFile (filePath) {
+	const util = require('util')
+	const fs = require('fs')
+
+	const readFile = util.promisify(fs.readFile)
+	const config = {
+		encoding: 'utf-8',
+		flag: 'r'
+	}
+
+	const file = await readFile(filePath, config)
+	const obj = JSON.parse(file)
+
+	return obj
+}

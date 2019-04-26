@@ -1,3 +1,5 @@
+import path from 'path'
+
 import Koa from 'koa'
 import cors from '@koa/cors'
 import koaBody from 'koa-body'
@@ -14,8 +16,9 @@ app.use(koaBody())
 
 app.use(async (ctx, next) => {
 	const key = ctx.request.query.key
+	const keys = await getJSONFromFile('./keys.json')
 
-	if (!require('./keys.json').includes(key)) {
+	if (!keys.includes(key)) {
 		return ctx.body = 'Need a correct invite key.'
 	}
 
@@ -33,3 +36,19 @@ app.listen(3000, () => {
 		Server started ${new Date}
 	`)	
 })
+
+async function getJSONFromFile (filePath) {
+	const util = require('util')
+	const fs = require('fs')
+
+	const readFile = util.promisify(fs.readFile)
+	const config = {
+		encoding: 'utf-8',
+		flag: 'r'
+	}
+
+	const file = await readFile(filePath, config)
+	const obj = JSON.parse(file)
+
+	return obj
+}
