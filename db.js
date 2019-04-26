@@ -18,7 +18,7 @@ async function getDataBaseByKey (key) {
 		await reinit()
 	}
 
-	const orders = require(fullPath)
+	let orders = require(fullPath)
 
 	const db = {
 		async getById (id) {
@@ -83,9 +83,7 @@ async function getDataBaseByKey (key) {
 		async reinit () {
 			await reinit()
 
-			const orders = await this.getAll()
-
-			return orders
+			return await this.getAll()
 		}
 	}
 
@@ -98,6 +96,8 @@ async function getDataBaseByKey (key) {
 	async function reinit () {
 		const defaultData = require(defaultPath)
 		await writeFile(fullPath, JSON.stringify(defaultData, null, 2))
+
+		orders = defaultData
 	}
 }
 
