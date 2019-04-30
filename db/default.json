@@ -4,7 +4,7 @@
 		"good": "Кросовки",
 		"price": 100000,
 		"clientName": "Сергей",
-		"requestStatus": 0,
-		"paymentStatus": 0
+		"requestStatus": 1,
+		"paymentStatus": 1
 	}
 ]
