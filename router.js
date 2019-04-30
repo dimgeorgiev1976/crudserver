@@ -36,6 +36,15 @@ router.post('/reinit', async (ctx, next) => {
 	await next()
 })
 
+router.post('/generate/:number', async (ctx, next) => {
+	const number = parseInt(ctx.params.number)
+		
+	ctx.body = await ctx.state.db.generate(number)
+
+	await next()
+})
+
+
 router.put('/order/:id', async (ctx, next) => {
 	const id = parseInt(ctx.params.id)
 

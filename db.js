@@ -84,6 +84,23 @@ async function getDataBaseByKey (key) {
 			await reinit()
 
 			return await this.getAll()
+		},
+
+		async generate (number) {
+
+			number = Math.max(1, Math.min(10, number))
+
+			for (let i = 0; i < number; i++) {
+				await this.create({
+					good: getRandomGood(),
+					price: getRandomBetween(1, 1000000),
+					clientName: getRandomName(),
+					requestStatus: getRandomBetween(1, 5),
+					paymentStatus: getRandomBetween(1, 4)
+				})
+			}
+
+			return await this.getAll()
 		}
 	}
 
@@ -115,4 +132,18 @@ async function getJSONFromFile (filePath) {
 	const obj = JSON.parse(file)
 
 	return obj
+}
+
+function getRandomName () {
+	const names = ['Алексей', 'Дмитрий', 'Сергей', 'Петр', 'Абдул', 'Александр', 'Тимофей', 'Евгений', 'Юрий', 'Мирослав']
+	return names[getRandomBetween(0, names.length - 1)]
+}
+
+function getRandomGood () {
+	const goods = ['Перчатки', 'Серьги', 'Яхта', 'Масло', 'Клавиатура', 'Луноход', 'Карандаш', 'Каштан', 'Веревка', 'Мыло']
+	return goods[getRandomBetween(0, goods.length - 1)]
+}
+
+function getRandomBetween (min, max) {
+	return min + Math.floor(Math.random() * (max - min + 1))
 }
