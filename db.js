@@ -87,7 +87,6 @@ async function getDataBaseByKey (key) {
 		},
 
 		async generate (number) {
-
 			number = Math.max(1, Math.min(10, number))
 
 			for (let i = 0; i < number; i++) {

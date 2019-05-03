@@ -1,11 +1,8 @@
-import path from 'path'
-
 import Koa from 'koa'
 import cors from '@koa/cors'
 import koaBody from 'koa-body'
 
 import router from './router'
-
 import getDataBaseByKey from './db'
 
 const app = new Koa()
@@ -31,11 +28,7 @@ app.use(router.routes())
 
 app.use(router.allowedMethods())
 
-app.listen(3000, () => {
-	console.log(`
-		Server started ${new Date}
-	`)	
-})
+app.listen(3000, () => console.log(`Server started ${new Date}`))
 
 async function getJSONFromFile (filePath) {
 	const util = require('util')
